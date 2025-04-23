@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/next"
+    }
+  ],
+  "env": {
+    "DISCORD_EMAIL": "@discord-email",
+    "DISCORD_PASSWORD": "@discord-password",
+    "NEXT_PUBLIC_API_URL": "${VERCEL_URL}"
+  }
+} 
