@@ -7,8 +7,8 @@
     }
   ],
   "env": {
-    "DISCORD_EMAIL": "@discord-email",
-    "DISCORD_PASSWORD": "@discord-password",
+    "DISCORD_EMAIL": "christopher.daniel.240@mail.ru",
+    "DISCORD_PASSWORD": "kow*73-!@iieof",
     "NEXT_PUBLIC_API_URL": "${VERCEL_URL}"
   }
 } 
