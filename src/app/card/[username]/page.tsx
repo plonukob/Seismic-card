@@ -11,22 +11,18 @@ interface CardPageProps {
 }
 
 async function getUserData(username: string) {
-  // In a real implementation, this would call our API
-  // const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/discord?username=${encodeURIComponent(username)}`);
-  // if (!res.ok) throw new Error('Failed to fetch user data');
-  // return res.json();
+  // Получаем базовый URL из переменной окружения или используем localhost
+  const baseUrl = process.env.NEXT_PUBLIC_API_URL || 
+                  (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000');
   
-  // For now, return mock data
-  return {
-    username,
-    avatar: `https://via.placeholder.com/128.png?text=${username[0].toUpperCase()}`,
-    messages: 1250,
-    role: 'Active Member',
-    joined: '20 марта 2024',
-    lastActive: '30 минут назад',
-    channels: ['content', 'general', 'memes'],
-    contentPosts: 5,
-  };
+  // Вызываем API для получения данных пользователя
+  const res = await fetch(`${baseUrl}/api/discord?username=${encodeURIComponent(username)}`);
+  
+  if (!res.ok) {
+    throw new Error('Failed to fetch user data');
+  }
+  
+  return res.json();
 }
 
 export default async function CardPage({ params }: CardPageProps) {

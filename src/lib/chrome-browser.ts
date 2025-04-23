@@ -11,13 +11,25 @@ export async function getBrowser(): Promise<Browser> {
     return browser;
   }
 
-  const executablePath = await chromium.executablePath;
-
-  browser = await puppeteer.launch({
-    args: chromium.args,
-    executablePath: executablePath || undefined,
-    headless: true,
-  });
+  // Определяем, запущено ли приложение на Vercel
+  const isVercel = process.env.VERCEL;
+  
+  // На Vercel используем chrome-aws-lambda
+  if (isVercel) {
+    browser = await puppeteer.launch({
+      args: chromium.args,
+      defaultViewport: chromium.defaultViewport,
+      executablePath: await chromium.executablePath,
+      headless: true,
+      ignoreHTTPSErrors: true,
+    });
+  } else {
+    // Локально используем обычный Chrome
+    browser = await puppeteer.launch({
+      headless: true,
+      args: ['--no-sandbox', '--disable-setuid-sandbox']
+    });
+  }
 
   return browser;
 }

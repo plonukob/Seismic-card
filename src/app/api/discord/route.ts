@@ -14,9 +14,11 @@ export async function GET(request: Request) {
   }
   
   try {
-    // In a production environment, you would actually scrape Discord
-    // Here we're just returning mock data for demonstration
+    // В реальном окружении используем скрапер Discord
+    const userData = await getDiscordStats(username, SERVER_ID, CONTENT_CHANNEL_ID);
     
+    // Закомментируем моковые данные, так как теперь используем реальные
+    /*
     const mockUserData = {
       username,
       avatar: `https://via.placeholder.com/128.png?text=${username[0].toUpperCase()}`,
@@ -27,11 +29,9 @@ export async function GET(request: Request) {
       channels: ['content', 'general', 'memes'],
       contentPosts: Math.floor(Math.random() * 10),
     };
+    */
     
-    // In reality, you would use the scraper here
-    // const userData = await getDiscordStats(username, SERVER_ID, CONTENT_CHANNEL_ID);
-    
-    return NextResponse.json(mockUserData);
+    return NextResponse.json(userData);
   } catch (error) {
     console.error('Error fetching Discord data:', error);
     return NextResponse.json(
